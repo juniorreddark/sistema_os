@@ -43,7 +43,7 @@ class ClienteController extends Controller
         ]);
 
         if ($Validator->fails()) {
-            return redirect()->route('Cliente.index')->with('errors', $Validator->errors());
+            return redirect()->route('clientes.index')->with('errors', $Validator->errors());
         }
         $cliente = new Cliente();
         $cliente->nome = $request->input('nome');
@@ -91,7 +91,7 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Validator = Validator ::make($request->all(),[
+        Validator ::make($request->all(),[
             'nome' =>'required|string|max:255',
             'data_nascimento' => 'required|date',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -102,14 +102,14 @@ class ClienteController extends Controller
         $cliente = Cliente::find($id);
         $foto_caminho = $request->file('foto')->store('fotos', 'public');
 
-        $cliente = new Cliente();
+
         $cliente->nome = $request->nome;
         $cliente->data_nascimento = $request->data_nascimento;
         $cliente->foto = $foto_caminho;
         $cliente->status = $request->status;
         $cliente->save();
 
-        return redirect()->route('Cliente.index')->with('success', 'Cliente atualizado com sucesso');
+        return redirect()->route('clientes.index')->with('success', 'Cliente atualizado com sucesso');
     }
 
     /**
@@ -119,6 +119,6 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
         $cliente->delete();
-        return redirect()->route('Cliente.index')->with('success', 'Cliente removido com sucesso.');
+        return redirect()->route('clientes.index')->with('success', 'Cliente removido com sucesso.');
     }
 }

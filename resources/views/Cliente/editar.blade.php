@@ -19,7 +19,7 @@
             <label for="status">Status:</label>
             <select name="status" id="status">
                 <option value="1" {{ $cliente->status ? 'selected' : '' }}>Ativo</option>
-                <option value="0" {{ !$cliente->status'selected' : '' }}>Inativo</option>
+                <option value="0" {{ !$cliente->status ? 'selected' : '' }}>Inativo</option>
             </select>
             <button type="submit">Atualizar</button>
         </form>

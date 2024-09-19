@@ -4,7 +4,7 @@
         <title>Lista de Clientes</title>
     </head>
 <body>
-    <button><a href="http://127.0.0.1:8000/">Página Inicial</a></button>
+    <button><a href="{{ route('pagina_inicial') }}">Página Inicial</a></button>
     <form action="{{ route('clientes.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <label for="">NOME: </label>

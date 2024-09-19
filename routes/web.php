@@ -14,7 +14,7 @@ Route::get('/token', function() {
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('pagina_inicial');
 
 
 Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos.index');

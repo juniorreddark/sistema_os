@@ -15,11 +15,8 @@ class EmpresaController extends Controller
     public function index()
     {
         $empresas = Empresa::all();
+        return view('Empresa.index', compact('empresas'));
 
-        return response()->json([
-            'status' => true,
-            'empresas' =>$empresas
-        ]);
     }
 
     /**
@@ -27,7 +24,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        return view('empresas.create');
+        return view('Empresa.create');
     }
 
     /**
@@ -46,7 +43,7 @@ class EmpresaController extends Controller
 
         $empresa = Empresa::create($request->all());
         return redirect()->route('empresas.index')->with('success', 'Empresa criada com sucesso.');
-        return response()->json(['status' => true,'message' => "Empresa Criada com sucesso!", 'empresa' => $empresa], 200);
+
     }
 
     /**
@@ -54,30 +51,45 @@ class EmpresaController extends Controller
      */
     public function show(Empresa $empresa)
     {
-        
+        return view('Empresa.show', compact('empresa'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Empresa $empresa)
+    public function edit( $id)
     {
-        //
+        $empresa = Empresa::find($id);
+        return view('Empresa.editar', compact('empresa'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'razao_social'=>'required',
+            'cnpj'=>'required',
+            'endereco'=>'required',
+            'numero'=>'required',
+            'telefone' =>'required',
+            'cep' =>'required',
+        ]);
+        $empresa = Empresa::find($id);
+        $empresa->update($request->all());
+
+        return redirect()->route('empresas.index')->with('success', 'Empresas atualizada com sucesso');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Empresa $empresa)
+    public function destroy($id)
     {
-        //
+        $empresa = Empresa::find($id);
+        $empresa->delete();
+        return redirect()->route('empresas.index')->with('success', 'Empresa removida com sucesso.');
     }
 }
