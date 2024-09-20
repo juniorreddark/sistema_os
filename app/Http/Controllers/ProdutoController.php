@@ -26,7 +26,7 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Produtos.create');
     }
 
     /**
@@ -63,9 +63,10 @@ class ProdutoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Produto $produto)
+    public function edit($id)
     {
-        //
+        $produto = Produto::find($id);
+        return view('Produtos.editar', compact('profuto'));
     }
 
     /**
