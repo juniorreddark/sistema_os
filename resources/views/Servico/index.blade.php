@@ -2,11 +2,12 @@
 <html>
     <head>
         <title>Lista de Servico</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
     <body>
         <button><a href="{{ route('pagina_inicial') }}">Página Inicial</a></button>
         <h1>Serviços</h1>
-        <form action="{{ route('servico.index') }}" method="POST">
+        <form action="{{ route('servicos.index') }}" method="POST">
             @csrf
             <label for="">TIPO</label>
             <input type="text" name="tipo" id="tipo">
@@ -33,7 +34,7 @@
            <button type="submit">Salvar</button>
 
         </form>
-        <!--<a href="{{ route('produtos.create') }}">Cadastrar</a>-->
+
         @if (session('success'))
             <div>{{ session('sucess') }}</div>
 
@@ -60,19 +61,15 @@
                     <td>{{ $servico->categoria->tipo }}</td>
                     <td>
                         @if ($servico->status)
+                            Concluido
                         @else
                             Em andamento
                         @endif
                     </td>
                     <td>
-                        <button>
-                            <a href="{{ route('servicos.edit', $servico->id) }}"> </a>
-                        <div>
-                            <p>editar</p>
-                        </div>
+                        <button> <a href="{{ route('servicos.edit', $servico->id) }}"> editar </a> </button>
 
-                        </button>
-                        <form action="{{ route('servicos.destroy', $produto->id) }}" method="POST" style="display:inline">
+                        <form action="{{ route('servicos.destroy', $servico->id) }}" method="POST" style="display:inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Excluir</button>

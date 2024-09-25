@@ -31,7 +31,7 @@
             <label for="status">Status</label>
             <select name="status" id="status">
                 <option value="1" {{ $servico->status ? 'selected': '' }}>Concluido</option>
-                <option value="0"{{ $servico->status ? 'selected' : ''}}> Em andamento</option>
+                <option value="0"{{ !$servico->status ? 'selected' : ''}}> Em andamento</option>
             </select>
             <button type="submit">Atualizar</button>
         </form>

@@ -14,11 +14,9 @@ class ProdutoController extends Controller
     public function index()
     {
         $produtos = Produto::all();
+        return view('Produtos.index', compact('produtos'));
 
-        return response()->json([
-            'status' => true,
-            'produtos' => $produtos
-        ]);
+
     }
 
     /**
@@ -34,30 +32,32 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        $produto = Produto::create($request->all());
+        $request->validate([
+            'nome'=>'required',
+            'valor'=>'required',
+            'descricao'=>'required',
+
+        ]);
+
+        Produto::create($request->all());
+        return redirect()->route('produtos.index')->with('success', 'Produto criada com sucesso.');
+
+        /*$produto = Produto::create($request->all());
 
         return response()->json([
             'status' => true,
             'message' => "Produto Criado com sucesso!",
             'produto' => $produto
-        ],200);
+        ],200);*/
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Produto $produto)
     {
-        $produtos = Produto::find($id);
+      return view('Produto.show', compact('produto'));
 
-        if (!$produtos) {
-            return response()->json(['message' => 'Produto não encontrado'], 404);
-        }
-
-        return response()->json([
-            'status' => true,
-            'produto' =>$produtos
-        ]);
     }
 
     /**
@@ -66,7 +66,7 @@ class ProdutoController extends Controller
     public function edit($id)
     {
         $produto = Produto::find($id);
-        return view('Produtos.editar', compact('profuto'));
+        return view('Produtos.editar', compact('produto'));
     }
 
     /**
@@ -74,27 +74,17 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $produtos = Produto::find($id);
-        if (!$produtos) {
-            return response()->json(['message' => 'Produto não encontrado '],404);
-        }
-
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'nome' => 'string|max:255',
             'valor' => 'integer',
+            'descricao' => 'string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['erros'=> $validator->erros()], 422);
-        }
+        $produto = Produto::find($id);
+        $produto->update($request->all());
 
-        $produtos->update($request->all());
+        return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso');
 
-        return response()->json([
-            'status' => true,
-            'message' => "produto atualizado com sucesso!",
-            'produto' =>$produtos
-        ], 200);
     }
 
     /**
@@ -102,12 +92,9 @@ class ProdutoController extends Controller
      */
     public function destroy($id)
     {
-        $produtos = Produto::find($id);
-        if (!$produtos) {
-            return response()->json(['message' => 'Produto não encontrado'],404);
-        }
+        $produto = Produto::find($id);
+        $produto->delete();
+        return redirect()->route('produtos.index')->with('success','Produto removido com sucesso');
 
-        $produtos -> delete();
-        return response()->json(['message' => 'Produto removido com sucesso']);
     }
 }

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Empresa;
 use App\Models\OrdemServico;
 use App\Models\Cliente;
 use App\Models\Servico;
+/*use Dotenv\Validator;*/
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class OrdemServicoController extends Controller
@@ -50,9 +53,10 @@ class OrdemServicoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OrdemServico $ordemServico)
+    public function show(OrdemServico $ordemservicos, $id)
     {
-
+        OrdemServico::with('cliente', 'seervico', 'Empresa')->find($id);
+        return view('ordem_servicos.show', compact('ordemservico'));
     }
 
     /**
@@ -76,9 +80,34 @@ class OrdemServicoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrdemServico $ordemServico)
+    public function update(Request $request, $id)
     {
-        //
+        Validator ::make($request->all(),[
+            'cliente_id'=>'integer',
+            'servico_id'=>'integer',
+            'empresa_id'=>'integer',
+            'data_inicial'=>'date',
+            'data_final'=>'date',
+            'valor'=>'decimal',
+            'status' =>'boolean'
+        ]);
+        $ordemservicos = OrdemServico::find($id);
+
+        if (!$ordemservicos){
+            return redirect()->back()->with('error', 'Ordem de serviço não encontrada.');
+        }
+
+        $ordemservicos->servico_id = $request->input('servico_id');
+        $ordemservicos->cliente_id = $request->input('cliente_id');
+        $ordemservicos->empresa_id = $request->input('empresa_id');
+        $ordemservicos->data_inicial = $request->input('data_inicial');
+        $ordemservicos->data_final =$request->input('data_final');
+        $ordemservicos->valor = $request->input('valor');
+        $ordemservicos->status = $request->input('status');
+
+        $ordemservicos->save();
+
+        return redirect()->route('ordem_servico.index')->with('success', 'Ordem de serviço atualizada com sucesso.');
     }
 
     /**
@@ -89,5 +118,14 @@ class OrdemServicoController extends Controller
         $ordemservicos = OrdemServico::find($id);
         $ordemservicos->delete();
         return redirect()->route('ordem_servicos.index')->with('success', 'Ordem de Servico com sucesso');
+    }
+
+    public function atualizarStatus(Request $request,$id)
+    {
+        $ordemservicos = OrdemServico::find($id);
+        $ordemservicos->status = true;
+        $ordemservicos->save();
+
+        return redirect()->route('ordem_servicos.index');
     }
 }
