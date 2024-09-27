@@ -9,37 +9,37 @@
     <body>
         <button><a href="{{ route('pagina_inicial') }}">Página Inicial</a></button>
         <h1>Ordem de Serviços</h1>
-        <form action="{{ route('ordem_servicos.index') }}" method="POST">
+        <form action="{{ route('ordem_servicos.store') }}" method="POST">
             @csrf
             <label for="">SERVIÇO:</label>
             <select name="servico_id" id="servico_id">
                 @foreach ($servicos as $servico)
-                    <option value="{{ $servico->id }}">{{ $servico->tipo }}></option>
+                    <option value="{{ $servico->id }}">{{ $servico->tipo }}</option>
                 @endforeach
             </select>
 
             <label for="">CLIENTE:</label>
             <select name="cliente_id" id="cliente_id">
                 @foreach ($clientes as $cliente)
-                    <option value="{{ $cliente->id }}">{{ $cliente->nome }}></option>
+                    <option value="{{ $cliente->id }}">{{ $cliente->nome }}</option>
                 @endforeach
             </select>
 
             <label for="">EMPRESA</label>
             <select name="empresa_id" id="empresa_id">
                 @foreach ($empresas as $empresa)
-                    <option value="{{ $empresa->id }}">{{ $empresa->razao_social }}></option>
+                    <option value="{{ $empresa->id }}">{{ $empresa->razao_social }}</option>
                 @endforeach
             </select>
 
             <label for="">DATA INICIAL</label>
-            <input type="date" name="data_inicial" id="data_inicial">
+            <input type="date" name='data_inicial' id='data_inicial'>
 
             <label for="">DATA FINAL</label>
-            <input type="date" name="data_final" id="data_final">
+            <input type="date" name='data_final' id='data_final'>
 
             <label for="">VALOR:</label>
-            <input type="numeric" name="valor" id="valor">
+            <input type="number" name="valor" id="valor">
 
             <label for="">Status</label>
             <select name="status" id="status">
@@ -48,7 +48,7 @@
             </select>
 
             <button type="submit">Salvar</button>
-            <!--<a href="{{ route('produto.create') }}"Cadastrar Produto</a>-->
+
             @if (session('success'))
                 <div>{{ session('success') }}</div>
             @endif
@@ -71,43 +71,45 @@
                         <tr>
                             <th scope="row">{{ $ordemservico->id }}</th>
                             <td>{{ $ordemservico->servico ? $ordemservico->servico->tipo :'N/A' }}</td>
-                            <td>{{ $ordemservico->clente ? $ordemservico->cliente->nome : 'N/A' }}</td>
-                           <td>{{ $ordemservico->empresa ? $ordemservico->empresa->razao_social : 'N/A' }}</td>
-                           <td>{{ $ordemservico->data_inicial }}</td>
-                           <td>{{ $ordemservico->data_final }}</td>
-                           <td>{{ $ordemservico->valor }}</td>
+                            <td>{{ $ordemservico->cliente ? $ordemservico->cliente->nome : 'N/A' }}</td>
+                            <td>{{ $ordemservico->empresa ? $ordemservico->empresa->razao_social : 'N/A' }}</td>
+                            <td>{{ $ordemservico->data_inicial ? $ordemservico->data_inicial : 'Data indisponível' }}</td>
+                           
+                            <td>{{ $ordemservico->data_final }}</td>
+                            <td>{{ $ordemservico->valor }}</td>
 
                            <td>
-                                    @if ($ordemservico->status)
-                                        concluido
-                                    @else
-                                        Em andamento
-                                    @endif
+                                @if ($ordemservico->status)
+                                    concluido
+                                @else
+                                    Em andamento
+                                @endif
 
-
+                            </td>
+                            <td>
                                 <button>
-                                        <a href="{{ route('ordem_servicos.edit', $ordemservico->id) }}">
-                                            <div>
-                                                <p>Editar</p>
-                                            </div>
-                                        </a>
+                                    <a href="{{ route('ordem_servicos.edit', $ordemservico->id) }}">
+                                        <div>
+                                            <p>Editar</p>
+                                        </div>
+                                    </a>
                                 </button>
 
                                 <form action="{{ route('ordem_servicos.destroy', $ordemservico->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit">
-                                        <p>Excluir</p>
+                                        Excluir
                                     </button>
                                 </form>
 
-                                <form action="{{ route('ordem_servicos.atualizarStatus', $ordemservico->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('POST')
+                                {{--  <form action="{{ route('ordem_servicos.atualizarStatus', $ordemservico->id) }}" method="POST" style="display:inline;">
+                                    //@csrf
+                                    //@method('POST')
                                     <button type="submit">
                                         <P>ATUALIZAR</P>
                                     </button>
-                                </form>
+                                </form>--}}
 
                             </td>
 

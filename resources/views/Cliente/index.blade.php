@@ -59,7 +59,7 @@
                 </td>
 
                 <td>
-                    <button><a href="{{ route('clientes.edit', $cliente->id) }}">Editar</a></button>
+                    <button><a href="{{ route('clientes.edit', $cliente->id) }}"><img src="https://img.icons8.com/?size=100&id=rEXGukWVdKQW&format=png&color=000000" height="35" width="35">Editar</a></button>
                     <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')

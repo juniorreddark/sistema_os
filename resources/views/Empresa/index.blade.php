@@ -58,7 +58,7 @@
                             <td>
                                 <button>
                                     <a href="{{ route('empresas.edit', $empresa->id) }}">
-                                            <img src="https://img.icons8.com/?size=100&id=rEXGukWVdKQW&format=png&color=000000" height="35" width="35">editar
+                                            
                                     </a>
                                 </button>
 

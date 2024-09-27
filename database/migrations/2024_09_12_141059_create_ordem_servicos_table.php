@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('ordem_servicos', function (Blueprint $table) {
+        Schema:: create('ordem_servicos', function (Blueprint $table) {
             $table->unsignedBigInteger('servico_id');
             $table->foreign('servico_id')
                 ->references('id')

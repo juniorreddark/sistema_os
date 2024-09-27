@@ -57,7 +57,7 @@ Route::get('/empresas/{id}', [EmpresaController::class, 'show'])->name('empresas
 
 Route::get('/servicos', [ServicoController::class, 'index'])->name('servicos.index');
 Route::get('/servicos_salvar', [EmpresaController::class, 'create'])->name('servicos.create');
-Route::post('servicos', [ServicoController::class, 'store'])->name('servicos.store');
+Route::post('servicos/cadastrar', [ServicoController::class, 'store'])->name('servicos.store');
 Route::get('servicos/editar/{id}', [ServicoController::class,  'edit'])->name('servicos.edit');
 Route::delete('servicos/{id}', [ServicoController::class, 'destroy'])->name('servicos.destroy');
 Route::put('/servicos/{id}', [ServicoController::class, 'update'])->name('servicos.update');
@@ -65,11 +65,11 @@ Route::get('/servicos/{id}', [ServicoController::class, 'show'])->name('servicos
 
 Route::get('/ordem_servicos', [OrdemServicoController::class, 'index'])->name('ordem_servicos.index');
 Route::get('/ordem_servicos_salvar', [OrdemServicoController::class, 'create'])->name('ordem_servicos.create');
-Route::post('ordem_servicos', [OrdemServicoController::class, 'store'])->name('ordem_servicos.store');
-Route::get('ordem_servicos/editar/{id}', [OrdemServicoController::class,  'edit'])->name('ordem_servicos.edit');
-Route::delete('ordem_servicos/{id}', [OrdemServicoController::class, 'destroy'])->name('ordem_servicos.destroy');
-Route::put('/ordem_servicos/{id}', [OrdemServicoController::class, 'update'])->name('ordem_servicos.update');
-Route::get('/ordem_servicos/{id}', [OrdemServicoController::class, 'show'])->name('ordem_servicos.show');
+Route::post('ordem_servicos/cadastrar', [OrdemServicoController::class, 'store'])->name('ordem_servicos.store');
+Route::get('/ordem_servicos/editar/{id}', [OrdemServicoController::class, 'edit'])->name('ordem_servicos.edit');
+Route::delete('/ordem_servicos/{id}', [OrdemServicoController::class, 'destroy'])->name('ordem_servicos.destroy');
+Route::put('/ordem_servicos/atualizar/{id}', [OrdemServicoController::class, 'update'])->name('ordem_servicos.update');
+Route::get('/ordem_servicos/visualizar/{id}', [OrdemServicoController::class, 'show'])->name('ordem_servicos.show');
 
 
 

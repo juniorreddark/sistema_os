@@ -9,7 +9,7 @@ class OrdemServico extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cliente_id', 'empresa_id', 'servico_id', 'data', 'data_finalizacao', 'status'];
+    protected $fillable = ['cliente_id', 'empresa_id', 'servico_id','data_inicial', 'data_final','valor' ,'status'];
 
     public function cliente()
     {

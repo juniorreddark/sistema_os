@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>Editar Ordem de Serviço</h1>
-        <form action="{{ route('ordem_servico.update', $ordemservicos->id) }}">
+        <form action="{{ route('ordem_servicos.update', $ordemservicos->id) }}">
             @csrf
             @method('PUT')
             <label for="">SERVIÇO:</label>
